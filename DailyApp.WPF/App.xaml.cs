@@ -1,4 +1,5 @@
-﻿using DailyApp.WPF.Views;
+﻿using DailyApp.WPF.ViewModels;
+using DailyApp.WPF.Views;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -28,7 +29,7 @@ namespace DailyApp.WPF
         /// <param name="containerRegistry"></param>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-           
+            containerRegistry.RegisterDialog<LoginUC, LoginUCViewModel>("LoginUC");
         }
         /// <summary>
         /// 初始化
@@ -38,17 +39,15 @@ namespace DailyApp.WPF
             var dialog = Container.Resolve<IDialogService>();
             dialog.ShowDialog("LoginUC", callback =>
             {
-                if (callback.Result == ButtonResult.OK)
-                {
-                    //登录成功
-                    base.OnInitialized();
-                }
-                else
+                if (callback.Result != ButtonResult.OK)
                 {
                     //登录失败 关闭程序
-                   Environment.Exit(0);
+                    Environment.Exit(0);
                     return;
+                  
                 }
+                //登录成功
+                base.OnInitialized();
             });
             
         }
