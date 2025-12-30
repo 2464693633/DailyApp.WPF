@@ -11,6 +11,38 @@
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!--左侧菜单样式-->
+            <Style x:Key="LeftMenuStyle" TargetType="ListBoxItem">
+                <Setter Property="MinHeight" Value="45"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Grid>
+                                <Border x:Name="boder"></Border>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalAlignment}"/>
+                                
+                            </Grid>
+                            
+                            <!--触发器-->
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="boder" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}"/>
+                                    <Setter TargetName="boder" Property="Opacity" Value="0.2"/>
+                                </Trigger>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="boder" Property="Background" Value="{DynamicResource PrimaryHueLightBrush}"/>
+                                    <Setter TargetName="boder" Property="Opacity" Value="0.2"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                            
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
         </ResourceDictionary>
     </Prism:PrismApplication.Resources>
 </Prism:PrismApplication>
