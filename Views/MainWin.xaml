@@ -9,6 +9,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}" 
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Title="MainWin" Height="550" Width="1000">
     <!--无标题栏-->
     <WindowChrome.WindowChrome>
@@ -18,7 +21,7 @@
                             Identifier="RootDialog"
                             SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
 
-        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}" x:Name="drawerHost">
             <!--菜单-->
             <materialDesign:DrawerHost.LeftDrawerContent>
                
@@ -33,7 +36,13 @@
                         </Image>
                     </StackPanel>
                     <!--菜单列表-->
-                    <ListBox ItemsSource="{Binding LeftMenuList}" ItemContainerStyle="{StaticResource LeftMenuStyle}">
+                    <ListBox ItemsSource="{Binding LeftMenuList}" ItemContainerStyle="{StaticResource LeftMenuStyle}" x:Name="lbMenu" SelectionChanged="lbMenu_SelectionChanged">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding NavigateCmm}" CommandParameter="{Binding ElementName=lbMenu,Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Background="Transparent">
@@ -71,7 +80,7 @@
                            IsChecked="False" Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
 
                             <Button Margin="24,0,0,0"     
-                     Command="{Binding MovePrevCommand}"
+                     Command="{Binding GoBackCmm}"
                      Content="{materialDesign:PackIcon Kind=ArrowLeft,
                                                        Size=24}"
                      Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
@@ -80,7 +89,7 @@
 
                             <Button Margin="16,0,0,0"
                      
-                     Command="{Binding MoveNextCommand}"
+                     Command="{Binding GoForWardCmm}"
                      Content="{materialDesign:PackIcon Kind=ArrowRight,
                                                        Size=24}"
                      Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
@@ -102,6 +111,9 @@
 
                     </DockPanel>
                 </materialDesign:ColorZone>
+
+                <!---->
+                <ContentControl prism:RegionManager.RegionName="MainViewRegion"></ContentControl>
   
             </DockPanel>
         </materialDesign:DrawerHost>

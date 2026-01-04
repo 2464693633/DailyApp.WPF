@@ -31,10 +31,16 @@ namespace DailyApp.WPF
         /// <param name="containerRegistry"></param>
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterDialog<LoginUC, LoginUCViewModel>("LoginUC");
+            containerRegistry.RegisterDialog<LoginUC, LoginUCViewModel>();
 
             //请求
             containerRegistry.GetContainer().Register<HttpRestClient>(made:Parameters.Of.Type<string>(serviceKey:"webUrl"));
+
+            //注册导航页面
+            containerRegistry.RegisterForNavigation<HomeUC, HomeUCViewModel>();//首页
+            containerRegistry.RegisterForNavigation<WaitUC, WaitUCViewModel>();//待办事项
+            containerRegistry.RegisterForNavigation<MemoUC, MemoUCViewModel>();//备忘录
+            containerRegistry.RegisterForNavigation<SettingsUC, SettingsUCViewModel>();//设置
         }
         /// <summary>
         /// 初始化
@@ -49,14 +55,14 @@ namespace DailyApp.WPF
         //            //登录失败 关闭程序
         //            Environment.Exit(0);
         //            return;
-                  
+
         //        }
         //        //登录成功
         //        base.OnInitialized();
         //    });
-            
+
         //}
-       
+
     }
 
 }

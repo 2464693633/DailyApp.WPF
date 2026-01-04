@@ -59,5 +59,15 @@ namespace DailyApp.WPF.Views
                 WindowState = WindowState.Maximized;
             }
         }
+        /// <summary>
+        /// 左侧菜单 选项改变（菜单移开）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lbMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //取消选中状态(移开菜单)
+            drawerHost.IsLeftDrawerOpen = false;
+        }
     }
 }
