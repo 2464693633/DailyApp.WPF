@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DailyApp.WPF.Views"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -12,10 +13,30 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
-
+        <!--第一行-->
         <TextBlock Grid.Row="0" Text="你好，欧拉！今天是2026年1月6日" FontSize="20" Margin="10"/>
-        
-        
+        <!--第二行-->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding StatPnelList}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="10" Padding="10" Background="{Binding BackColor}" CornerRadius="5">
+                        <Grid>
+                            <StackPanel>
+                                <md:PackIcon Margin="15" Kind="{Binding Icon}" Width="22" Height="22"/>
+                                <TextBlock Margin="0,15" Text="{Binding ItemName}" FontWeight="Bold" FontSize="16"/>
+                                <TextBlock Margin="0,15" Text="{Binding Result}" FontSize="24" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         
     </Grid>
 </UserControl>
